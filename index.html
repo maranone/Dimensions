@@ -12,7 +12,7 @@
         function populateFileList() {
             var select = document.getElementById("fileList");
             select.innerHTML = "";
-            fetch("scenarios/")
+            fetch("https://maranone.github.io/Dimensions/scenarios/")
                 .then(response => response.text())  // Assuming the server returns plain text
                 .then(data => {
                     var files = data.split('\n');
