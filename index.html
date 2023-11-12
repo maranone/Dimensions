@@ -6,30 +6,48 @@
     <title>Dimensions and affinity</title>
 </head>
 <body>
+
+    <!-- Form in Javascript -->
+    <form id="myForm">
+    </form>
+
+    <!-- List Box to select files from the "scenarios" folder -->
     <select id="fileList" onchange="showFileInfo()">
     </select>
-<script>
-    function populateFileList() {
-        var select = document.getElementById("fileList");
-        select.innerHTML = "";
 
-        fetch("getFiles.php")  // Assuming the PHP script is in the same directory
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(file => {
-                    var option = document.createElement("option");
-                    option.text = file;
-                    select.add(option);
-                });
-            })
-            .catch(error => console.error("Error fetching file list:", error));
-    }
+    <!-- Labels to display information of the selected file -->
+    <div id="fileInfo">
+    </div>
 
-    function showFileInfo() {
-        // Implement this function to display information about the selected file if needed
-    }
+    <script>
+        function populateFileList() {
+            var select = document.getElementById("fileList");
+            select.innerHTML = "";
 
-    populateFileList();
-</script>
+            // Fetch the content of the scenarios.txt file
+            fetch("scenarios.txt")
+                .then(response => response.text())
+                .then(data => {
+                    // Split the text into an array using newline as a delimiter
+                    var files = data.split('\n');
+
+                    // Iterate through the array and add each file as an option to the select element
+                    files.forEach(file => {
+                        var option = document.createElement("option");
+                        option.text = file.trim();  // Trim to remove leading/trailing whitespaces
+                        select.add(option);
+                    });
+                })
+                .catch(error => console.error("Error fetching file list:", error));
+        }
+
+        function showFileInfo() {
+            // Implement this function to display information about the selected file if needed
+        }
+
+        populateFileList();
+    </script>
+
 </body>
 </html>
+
