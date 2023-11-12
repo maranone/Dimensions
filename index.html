@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dimensions, weights and affinity</title>
+    <title>Dimensions and affinity</title>
 </head>
 <body>
 
@@ -19,27 +19,34 @@
     <div id="fileInfo">
     </div>
 
-    <script>
-    	function populateFileList() {
-       	 	// Get the select element
-      		var select = document.getElementById("fileList");
-	
-        	// Clear existing options
-        	select.innerHTML = "";
+<script>
+    function populateFileList() {
+        // Get the select element
+        var select = document.getElementById("fileList");
 
-	        // Fetch the list of files from the "scenarios" folder
-        	fetch("scenarios/")
-            		.then(response => response.json()) 
-            		.then(data => {
-	                	// Iterate through the array and add each file as an option to the select element
-                		data.forEach(file => {
-                    			var option = document.createElement("option");
-					option.text = file;
-                    			select.add(option);
-                		});
-            		})
-            		.catch(error => console.error("Error retrieving file list:", error));
-    	}
+        // Clear existing options
+        select.innerHTML = "";
+
+        // Fetch the list of files from the "scenarios" folder
+        fetch("scenarios/")
+            .then(response => response.text())  // Assuming the server returns plain text
+            .then(data => {
+                // Split the text into an array using newline as a delimiter
+                var files = data.split('\n');
+
+                // Iterate through the array and add each file as an option to the select element
+                files.forEach(file => {
+                    var option = document.createElement("option");
+                    option.text = file.trim();  // Trim to remove leading/trailing whitespaces
+                    select.add(option);
+                });
+            })
+            .catch(error => console.error("Error retrieving file list:", error));
+    }
+</script>
+	
+	
+	<script>
 
 
         populateFileList();
