@@ -8,23 +8,28 @@
 <body>
     <select id="fileList" onchange="showFileInfo()">
     </select>
-    <script>
-        function populateFileList() {
-            var select = document.getElementById("fileList");
-            select.innerHTML = "";
-            fetch("https://maranone.github.io/Dimensions/scenarios/")
-                .then(response => response.text())  // Assuming the server returns plain text
-                .then(data => {
-                    var files = data.split('\n');
-                    files.forEach(file => {
-                        var option = document.createElement("option");
-                        option.text = file.trim();  // Trim to remove leading/trailing whitespaces
-                        select.add(option);
-                    });
-                })
-                .catch(error => console.error("Error fetching file list:", error));
-        }
-        populateFileList();
-    </script>
+<script>
+    function populateFileList() {
+        var select = document.getElementById("fileList");
+        select.innerHTML = "";
+
+        fetch("getFiles.php")  // Assuming the PHP script is in the same directory
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(file => {
+                    var option = document.createElement("option");
+                    option.text = file;
+                    select.add(option);
+                });
+            })
+            .catch(error => console.error("Error fetching file list:", error));
+    }
+
+    function showFileInfo() {
+        // Implement this function to display information about the selected file if needed
+    }
+
+    populateFileList();
+</script>
 </body>
 </html>
