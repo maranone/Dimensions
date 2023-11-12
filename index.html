@@ -6,7 +6,9 @@
     <title>Dimensions and affinity</title>
 </head>
 <body>
-    <pre id="description.txt"></pre>
+    <!-- Display the content of the "description.txt" file using <pre> tag -->
+    <pre id="fileContent"></pre>
+
     <!-- Form in Javascript -->
     <form id="myForm">
     </form>
@@ -39,6 +41,14 @@
                     });
                 })
                 .catch(error => console.error("Error fetching file list:", error));
+
+            // Fetch the content of the description.txt file and display it in the <pre> tag
+            fetch("description.txt")
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("fileContent").innerText = data;
+                })
+                .catch(error => console.error("Error fetching description:", error));
         }
 
         function showFileInfo() {
@@ -50,4 +60,3 @@
 
 </body>
 </html>
-
