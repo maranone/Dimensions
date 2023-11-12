@@ -6,8 +6,8 @@
     <title>Dimensions and Affinity</title>
 </head>
 <body>
-    <!-- Display the content of the "dimensions.txt" file using <pre> tag -->
-    <pre id="fileContent"></pre>
+    <!-- Display the content of the "description.txt" file -->
+    <div id="fileContent"></div>
 
     <!-- Sliders for each dimension -->
     <div id="sliders"></div>
@@ -45,12 +45,18 @@
                 })
                 .catch(error => console.error("Error fetching file list:", error));
 
-            // Fetch the content of the dimensions.txt file and display it in the <pre> tag
-            fetch("dimensions.txt")
+            // Fetch the content of the description.txt file and display it
+            fetch("description.txt")
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById("fileContent").innerText = data;
+                })
+                .catch(error => console.error("Error fetching description:", error));
 
+            // Fetch the content of the dimensions.txt file and create sliders
+            fetch("dimensions.txt")
+                .then(response => response.text())
+                .then(data => {
                     // Create sliders for each line in dimensions.txt
                     createSliders(data.split('\n'));
                 })
