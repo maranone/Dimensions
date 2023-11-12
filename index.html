@@ -20,35 +20,35 @@
     </div>
 
     <script>
-    	function populateFileList() {
-        	// Get the select element
-        	var select = document.getElementById("fileList");
-	        // Clear existing options
-        	select.innerHTML = "";
+        function populateFileList() {
+            // Get the select element
+            var select = document.getElementById("fileList");
+            // Clear existing options
+            select.innerHTML = "";
 
-        	// Fetch the list of files from the "scenarios" folder
-        	fetch("scenarios/")
-            		.then(response => response.json())  // Assuming the server returns a JSON array of file names
-       		    	.then(data => {
-	                // Iterate through the array and add each file as an option to the select element
-  		        	data.forEach(file => {
-	        			var option = document.createElement("option");
-	                    		option.text = file;
-	                    		select.add(option);
-	                		});
-            	})
-            	.catch(error => console.error("Error fetching file list:", error));
-    		}
-	</script>
-	
-	
-	<script>
+            // Fetch the list of files from the "scenarios" folder
+            fetch("scenarios/")
+                .then(response => response.text())  // Assuming the server returns plain text
+                .then(data => {
+                    // Split the text into an array using newline as a delimiter
+                    var files = data.split('\n');
 
-
-        populateFileList();
+                    // Iterate through the array and add each file as an option to the select element
+                    files.forEach(file => {
+                        var option = document.createElement("option");
+                        option.text = file.trim();  // Trim to remove leading/trailing whitespaces
+                        select.add(option);
+                    });
+                })
+                .catch(error => console.error("Error fetching file list:", error));
+        }
 
         function showFileInfo() {
+            // Implement this function to display information about the selected file if needed
         }
+
+        // Call the function to populate the file list on page load
+        populateFileList();
     </script>
 
 </body>
