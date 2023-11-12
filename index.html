@@ -4,13 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dimensions and Affinity</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
     <!-- Display the content of the "description.txt" file -->
     <div id="fileContent"></div>
 
-    <!-- Sliders for each dimension -->
-    <div id="sliders"></div>
+    <!-- Sliders for each dimension in a table -->
+    <table id="slidersTable"></table>
 
     <!-- Form in Javascript -->
     <form id="myForm">
@@ -53,18 +65,18 @@
                 })
                 .catch(error => console.error("Error fetching description:", error));
 
-            // Fetch the content of the dimensions.txt file and create sliders
+            // Fetch the content of the dimensions.txt file and create sliders in a table
             fetch("dimensions.txt")
                 .then(response => response.text())
                 .then(data => {
-                    // Create sliders for each line in dimensions.txt
-                    createSliders(data.split('\n'));
+                    // Create sliders in a table for each line in dimensions.txt
+                    createSlidersTable(data.split('\n'));
                 })
                 .catch(error => console.error("Error fetching dimensions:", error));
         }
 
-        function createSliders(lines) {
-            var slidersContainer = document.getElementById("sliders");
+        function createSlidersTable(lines) {
+            var slidersTable = document.getElementById("slidersTable");
 
             lines.forEach(line => {
                 // Skip empty lines
@@ -72,9 +84,17 @@
                     return;
                 }
 
+                // Split line into dimension and description
+                var [dimension, description] = line.split(":").map(str => str.trim());
+
+                // Create a row for each dimension
+                var row = slidersTable.insertRow();
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+
                 // Create a label for each dimension
                 var label = document.createElement("label");
-                label.innerText = line.trim();
+                label.innerText = dimension;
 
                 // Create a slider for each dimension
                 var slider = document.createElement("input");
@@ -83,12 +103,9 @@
                 slider.max = 5;
                 slider.value = 0;
 
-                // Append the label and slider to the container
-                slidersContainer.appendChild(label);
-                slidersContainer.appendChild(slider);
-
-                // Add a line break for better spacing
-                slidersContainer.appendChild(document.createElement("br"));
+                // Append the label and slider to the cells
+                cell1.appendChild(label);
+                cell2.appendChild(slider);
             });
         }
 
