@@ -15,6 +15,11 @@
             padding: 8px;
             text-align: left;
         }
+
+        .slider-value {
+            display: inline-block;
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
@@ -103,9 +108,20 @@
                 slider.max = 5;
                 slider.value = 0;
 
-                // Append the label and slider to the cells
+                // Create a span to display the current selected value
+                var valueSpan = document.createElement("span");
+                valueSpan.className = "slider-value";
+                valueSpan.innerText = slider.value;
+
+                // Append the label, slider, and value span to the cells
                 cell1.appendChild(label);
                 cell2.appendChild(slider);
+                cell2.appendChild(valueSpan);
+
+                // Update the value span when the slider value changes
+                slider.addEventListener("input", function () {
+                    valueSpan.innerText = slider.value;
+                });
             });
         }
 
