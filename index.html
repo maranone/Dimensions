@@ -106,7 +106,6 @@
                 slider.type = "range";
                 slider.min = -5;
                 slider.max = 5;
-                slider.value = 0;
 
                 // Create a span to display the current selected value
                 var valueSpan = document.createElement("span");
@@ -118,9 +117,17 @@
                 cell2.appendChild(slider);
                 cell2.appendChild(valueSpan);
 
-                // Update the value span when the slider value changes
+                // Retrieve the saved slider position from local storage
+                var savedPosition = localStorage.getItem(dimension);
+                if (savedPosition !== null) {
+                    slider.value = savedPosition;
+                    valueSpan.innerText = savedPosition;
+                }
+
+                // Update the value span and save the slider position when the slider value changes
                 slider.addEventListener("input", function () {
                     valueSpan.innerText = slider.value;
+                    localStorage.setItem(dimension, slider.value);
                 });
             });
         }
