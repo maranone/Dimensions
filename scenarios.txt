@@ -3,4 +3,15 @@ Saturday night with family: Movie and Bowling; Spending quality time with family
 Outdoor adventure: Hiking and Picnic; A day of outdoor adventure with a hike and a picnic in a scenic location; 5; 3; 3; -2; 3; -3; 5
 Book Club Meeting; Gathering with a book club to discuss the latest novel; 5; 5; 3; -2; 5; -3; 3
 Fitness Class and Healthy Cooking Workshop; Participating in a fitness class followed by a healthy cooking workshop; 5; 3; 5; -2; 3; -3; 5
+Art Gallery Visit; Exploring an art gallery and appreciating various artworks; 4; 4; 2; -1; 4; -2; 4
+Beach Day with Friends; Enjoying a day at the beach with friends, sunbathing, and playing beach games; 4; 3; 1; -2; 4; -2; 5
+Volunteer at Local Community Center; Spending a day volunteering at a local community center; 4; 4; 3; -2; 4; 1; 3
+Tech Conference Attendance; Participating in a technology conference to learn and network; 3; 4; 4; -3; 2; 5; 2
+Culinary Adventure: Cooking Class and Food Tasting; Attending a cooking class followed by a food tasting session; 3; 3; 2; -2; 3; -3; 4
+Day at the Zoo; Spending a day exploring the zoo and learning about different animals; 4; 3; 2; -2; 4; -2; 4
+Gardening Day; Spending a day gardening, planting flowers, and tending to the garden; 5; 3; 3; -1; 3; 1; 4
+Escape Room Challenge; Engaging in an escape room challenge with friends; 3; 4; 1; -2; 3; -2; 4
+Historical Site Exploration; Visiting a historical site and exploring its significance; 4; 3; 2; -1; 3; -3; 4
+Night at the Symphony; Attending a symphony performance for an evening of classical music; 4; 4; 3; -2; 3; -3; 3
+
 
