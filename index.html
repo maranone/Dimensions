@@ -42,17 +42,16 @@
     <div id="scenarioInfo">
     </div>
 
-    <!-- Table to display "Default Dimensions," "Amended Dimensions," and "Affinity" -->
+    <!-- Table to display "Dimensions," "My Weights," "Scenario Dimensions," and "Affinity" -->
     <table id="dimensionsTable">
         <tr>
-            <th>Default Dimensions</th>
-            <th>Amended Dimensions</th>
+            <th>Dimensions</th>
+            <th>My Weights</th>
+            <th>Scenario Dimensions</th>
             <th>Affinity</th>
         </tr>
-        <tr>
-            <td id="defaultDimensions"></td>
-            <td id="amendedDimensions"></td>
-            <td id="affinity"></td>
+        <tr id="dimensionsRow">
+            <!-- This row will be dynamically populated based on the selected scenario -->
         </tr>
     </table>
 
@@ -90,6 +89,18 @@
 
         function createSlidersTable(lines) {
             var slidersTable = document.getElementById("slidersTable");
+            var dimensionsRow = document.getElementById("dimensionsRow");
+
+            // Clear existing content
+            dimensionsRow.innerHTML = "";
+
+            // Add "Dimensions," "My Weights," "Scenario Dimensions," and "Affinity" headers
+            var headers = ["Dimensions", "My Weights", "Scenario Dimensions", "Affinity"];
+            headers.forEach(headerText => {
+                var th = document.createElement("th");
+                th.innerText = headerText;
+                dimensionsRow.appendChild(th);
+            });
 
             lines.forEach(line => {
                 // Skip empty lines
@@ -100,11 +111,6 @@
                 // Split line into dimension and description
                 var [dimension, description] = line.split(":").map(str => str.trim());
 
-                // Create a row for each dimension
-                var row = slidersTable.insertRow();
-                var cell1 = row.insertCell(0);
-                var cell2 = row.insertCell(1);
-
                 // Create a label for each dimension
                 var label = document.createElement("label");
                 label.innerText = dimension;
@@ -114,29 +120,17 @@
                 slider.type = "range";
                 slider.min = -5;
                 slider.max = 5;
+                slider.disabled = true;  // Disable the slider
 
                 // Create a span to display the current selected value
                 var valueSpan = document.createElement("span");
                 valueSpan.className = "slider-value";
                 valueSpan.innerText = slider.value;
 
-                // Append the label, slider, and value span to the cells
-                cell1.appendChild(label);
-                cell2.appendChild(slider);
-                cell2.appendChild(valueSpan);
-
-                // Retrieve the saved slider position from local storage
-                var savedPosition = localStorage.getItem(dimension);
-                if (savedPosition !== null) {
-                    slider.value = savedPosition;
-                    valueSpan.innerText = savedPosition;
-                }
-
-                // Update the value span and save the slider position when the slider value changes
-                slider.addEventListener("input", function () {
-                    valueSpan.innerText = slider.value;
-                    localStorage.setItem(dimension, slider.value);
-                });
+                // Append the label, slider, and value span to the row
+                dimensionsRow.appendChild(label);
+                dimensionsRow.appendChild(slider);
+                dimensionsRow.appendChild(valueSpan);
             });
         }
 
@@ -152,55 +146,20 @@
                     // Find the selected scenario in the array
                     var selectedScenarioData = scenarios.find(scenario => scenario.startsWith(selectedScenario));
 
-                    // Display the title and description of the selected scenario
+                    // Populate the "Scenario Dimensions" column in the table
                     var scenarioParts = selectedScenarioData.split(';');
-                    document.getElementById("scenarioInfo").innerText = `Title: ${scenarioParts[0]}\nDescription: ${scenarioParts[1]}`;
+                    var scenarioDimensions = scenarioParts.slice(2);
+                    var slidersTable = document.getElementById("slidersTable");
 
-                    // Populate the "Default Dimensions" column in the table
-                    document.getElementById("defaultDimensions").innerText = scenarioParts.slice(2).join('\n');
+                    for (var i = 0; i < slidersTable.rows[0].cells.length; i++) {
+                        // Update the value span with the scenario's dimension weight
+                        slidersTable.rows[0].cells[i].getElementsByTagName("span")[0].innerText = scenarioDimensions[i];
+                    }
                 })
                 .catch(error => console.error("Error fetching scenario details:", error));
-        }
 
-        function populateDimensionsTable() {
-            var amendedDimensions = document.getElementById("amendedDimensions");
-            amendedDimensions.innerHTML = "";
-
-            // Fetch amended dimensions from local storage
-            var savedAmendedDimensions = JSON.parse(localStorage.getItem("amendedDimensions")) || {};
-
-            // Iterate through the default dimensions and populate the "Amended Dimensions" column
-            var defaultDimensions = document.getElementById("defaultDimensions").innerText.split('\n');
-            defaultDimensions.forEach(dimension => {
-                if (dimension.trim() !== "") {
-                    var amendedSlider = document.createElement("input");
-                    amendedSlider.type = "range";
-                    amendedSlider.min = -5;
-                    amendedSlider.max = 5;
-
-                    // Set the value from the saved amended dimensions or default to 0
-                    amendedSlider.value = savedAmendedDimensions[dimension] || 0;
-
-                    // Create a span to display the current selected value
-                    var valueSpan = document.createElement("span");
-                    valueSpan.className = "slider-value";
-                    valueSpan.innerText = amendedSlider.value;
-
-                    // Update the value span and save the slider position when the slider value changes
-                    amendedSlider.addEventListener("input", function () {
-                        valueSpan.innerText = amendedSlider.value;
-
-                        // Save the amended slider position to local storage
-                        savedAmendedDimensions[dimension] = amendedSlider.value;
-                        localStorage.setItem("amendedDimensions", JSON.stringify(savedAmendedDimensions));
-                    });
-
-                    // Append the slider and value span to the "Amended Dimensions" column
-                    amendedDimensions.appendChild(amendedSlider);
-                    amendedDimensions.appendChild(valueSpan);
-                    amendedDimensions.appendChild(document.createElement("br"));
-                }
-            });
+            // Calculate and update the "Affinity" column (currently a placeholder)
+            calculateAffinity();
         }
 
         function calculateAffinity() {
@@ -210,14 +169,34 @@
             document.getElementById("affinity").innerText = "To be calculated";
         }
 
-        function showFileInfo() {
-            // Implement this function to display information about the selected file if needed
+        function populateDimensionsTable() {
+            var select = document.getElementById("scenarioList");
+            var defaultDimensions = select.options[select.selectedIndex].value;
+
+            // Fetch the content of the description.txt file and display it
+            fetch("description.txt")
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("fileContent").innerText = data;
+                })
+                .catch(error => console.error("Error fetching description:", error));
+
+            // Fetch the content of the description.txt file
+            fetch("description.txt")
+                .then(response => response.text())
+                .then(data => {
+                    // Split the text into an array using newline as a delimiter
+                    var lines = data.split('\n');
+
+                    // Populate the sliders table with the dimensions
+                    createSlidersTable(lines);
+                })
+                .catch(error => console.error("Error fetching dimensions:", error));
         }
 
         populateFileList();
         populateDimensionsTable();
     </script>
-
 </body>
 </html>
 
