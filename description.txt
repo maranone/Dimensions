@@ -27,4 +27,4 @@ Below, you'll discover a series of dimensions, each accompanied by a slider allo
    - Focuses on how individuals choose to spend their free time for enjoyment and relaxation.
 
 
-Now, please feel free to experiment by selecting a scenario. You can amend their weights if you wish and see the affinity to your dimensions weights.
+Now, please feel free to experiment by selecting a scenario. You will then see the affinity to your dimensions weights.
