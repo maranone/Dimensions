@@ -25,3 +25,6 @@ Below, you'll discover a series of dimensions, each accompanied by a slider allo
 7. Recreational Pursuits:
    - Encompasses personal recreation, hobbies, and leisure activities.
    - Focuses on how individuals choose to spend their free time for enjoyment and relaxation.
+
+
+Now, please feel free to experiment by selecting a scenario. You can amend their weights if you wish and see the affinity to your dimensions weights.
