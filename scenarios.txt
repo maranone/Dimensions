@@ -1,2 +1,6 @@
-Going to the movies
-Job offer on different country
+Going to the movies; A casual evening at the cinema, enjoying the latest blockbuster; 3; 3; 0; -2; 3; -3; 5
+Saturday night with family: Movie and Bowling; Spending quality time with family, starting with a movie and ending with bowling; 3; 3; 0; -2; 3; -3; 5
+Outdoor adventure: Hiking and Picnic; A day of outdoor adventure with a hike and a picnic in a scenic location; 5; 3; 3; -2; 3; -3; 5
+Book Club Meeting; Gathering with a book club to discuss the latest novel; 5; 5; 3; -2; 5; -3; 3
+Fitness Class and Healthy Cooking Workshop; Participating in a fitness class followed by a healthy cooking workshop; 5; 3; 5; -2; 3; -3; 5
+
