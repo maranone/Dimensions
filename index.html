@@ -163,6 +163,12 @@
         }
 
         function calculateAffinity() {
+            var affinityElement = document.getElementById("affinity");
+
+            if (!affinityElement) {
+                console.error("Element with id 'affinity' not found");
+                return;
+            }
             // Implement the logic to calculate affinity based on default and amended dimensions
             // This can be done by retrieving values from sliders and applying your formula
             // For now, leave it blank until you finalize the formula.
@@ -173,6 +179,10 @@
             var select = document.getElementById("scenarioList");
             var defaultDimensions = select.options[select.selectedIndex].value;
 
+            if (!select) {
+                console.error("Element with id 'scenarioList' not found");
+                return;
+            }
             // Fetch the content of the description.txt file and display it
             fetch("description.txt")
                 .then(response => response.text())
